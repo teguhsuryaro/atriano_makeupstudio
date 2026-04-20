@@ -1,0 +1,214 @@
+/* ================================================================
+   ATRIANO MAKE UP STUDIO — portfolio.css
+   ================================================================ */
+
+:root {
+  --bg-base:       #ffffff; 
+  --bg-soft:       #fff0f3; 
+  --text-main:     #111827; 
+  --text-muted:    #64748b; 
+  --text-light:    #ffffff; 
+  --accent-primary: #ff0054; 
+  --accent-hover:   #d90046; 
+
+  --ff-display: 'Playfair Display', Georgia, serif;
+  --ff-body:    'DM Sans', sans-serif;
+
+  --ease:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --t:         0.4s;
+  --container: 1200px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-soft);
+  color: var(--text-main);
+  font-family: var(--ff-body);
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+.container { width: min(var(--container), 92%); margin: 0 auto; }
+.section { padding: 4rem 0 8rem; }
+
+/* --- HEADER --- */
+.port-header {
+  background: var(--bg-base);
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(255,0,84,0.1);
+  text-align: center;
+}
+.back-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+  transition: color var(--t);
+}
+.back-link:hover { color: var(--accent-primary); }
+
+.eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.title {
+  font-family: var(--ff-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+}
+.title em { color: var(--accent-primary); font-style: italic; }
+.subtitle {
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* --- GALLERY GRID --- */
+.gallery-grid {
+  display: grid;
+  /* Membuat kolom responsif, minimal lebar 250px */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5; /* Membuat rasio foto portrait (cocok untuk IG/Makeup) */
+  cursor: pointer;
+  background: var(--bg-base);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  transition: transform var(--t), box-shadow var(--t);
+}
+.gallery-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(255,0,84,0.15);
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.gallery-item:hover .gallery-img {
+  transform: scale(1.08);
+}
+
+/* Teks melayang saat di hover */
+.item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity var(--t);
+}
+.gallery-item:hover .item-overlay { opacity: 1; }
+.item-overlay span {
+  color: var(--text-light);
+  font-family: var(--ff-display);
+  font-size: 1.2rem;
+  font-style: italic;
+  transform: translateY(15px);
+  transition: transform var(--t) var(--ease);
+}
+.gallery-item:hover .item-overlay span { transform: translateY(0); }
+
+/* --- IG CARD (KARTU KE-16) --- */
+.ig-card {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, #b8003c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
+.ig-card:hover { transform: translateY(-8px) scale(1.02); }
+.ig-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.ig-card h3 {
+  font-family: var(--ff-display);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.ig-card p {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.btn-ig {
+  display: inline-block;
+  background: var(--text-light);
+  color: var(--accent-primary);
+  font-weight: 700;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+/* --- LIGHTBOX (MODAL) --- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.lightbox.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transform: scale(0.9);
+  transition: transform 0.3s var(--ease);
+}
+.lightbox.active .lightbox-img { transform: scale(1); }
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 3rem;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.lightbox-close:hover { color: var(--accent-primary); }
+
+/* Animasi Muncul */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
